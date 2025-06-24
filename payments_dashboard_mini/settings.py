@@ -89,10 +89,15 @@ DATABASES = {
 }
 
 # Test database configuration
-# Use the same database for testing to avoid permission issues
+# Use a separate test database with test_ prefix
 if "test" in sys.argv or "pytest" in sys.argv:
     DATABASES["default"]["TEST"] = {
-        "NAME": DATABASES["default"]["NAME"],
+        "NAME": f"test_{config('DB_NAME')}",
+        "USER": "payments_app",
+        "PASSWORD": config("DB_PASSWORD"),
+        "HOST": config("DB_HOST"),
+        "PORT": config("DB_PORT"),
+        "KEEPDB": True,  # Don't drop/recreate the database, only tables
     }
 
 

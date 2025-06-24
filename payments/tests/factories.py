@@ -123,7 +123,7 @@ def generate_bulk_data(n_customers=10, n_services=5, n_purchases=20, n_payments=
             customer_id=row["customer_id"],
             service_id=row["service_id"],
             start_date=row["start_date"],
-            end_date=row["end_date"],
+            end_date=row["end_date"] if pd.notna(row["end_date"]) else None,
             status=row["status"],
         )
         for _, row in purchases_data.iterrows()
