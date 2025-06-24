@@ -1,5 +1,5 @@
 import pytest
-from payments.tests.factories import (
+from payments.factories import (
     CustomerFactory,
     ServiceFactory,
     PurchaseFactory,
