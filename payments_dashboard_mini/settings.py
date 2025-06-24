@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from decouple import config
+import sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -86,6 +87,13 @@ DATABASES = {
         "PORT": config("DB_PORT"),
     }
 }
+
+# Test database configuration
+# Use the same database for testing to avoid permission issues
+if "test" in sys.argv or "pytest" in sys.argv:
+    DATABASES["default"]["TEST"] = {
+        "NAME": DATABASES["default"]["NAME"],
+    }
 
 
 # Password validation
