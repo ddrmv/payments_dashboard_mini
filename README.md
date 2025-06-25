@@ -1,23 +1,25 @@
 # Payments Dashboard
 
-A practice project for a Payments Dashboard for a telecom, built with Django, Django ORM, SQLAlchemy for advanced queries, DTL, Bootstrap, and PostgreSQL. The project focuses on Pandas for analytics, pytest for testing, and a user-friendly dashboard for transaction lists and reports.
+A simple payments dashboard built with Django, Django ORM, SQLAlchemy, DTL, Bootstrap, and PostgreSQL. With Customers, Services, Purchases and Payments models, tested with 20 services and 10 million records each for the other models.
+
 
 ## Project Overview
-- **Objective**: Build a dashboard to display and analyze telecom payment transactions.
+- **Objective**: Build a simple dashboard to display and analyze payment transactions.
 - **Technologies**:
-  - Django (web framework, ORM for primary database operations)
-  - SQLAlchemy (advanced queries, e.g., aggregations, filters)
-  - Pandas (transaction analysis, e.g., daily totals)
-  - pytest (>80% test coverage)
-  - TDL (templates)
+  - Django (web framework, ORM for primary/simple database operations)
+  - SQLAlchemy (advanced queries)
+  - Pandas (transaction analysis)
+  - pytest
+  - DTL (templates)
   - Bootstrap (frontend styling)
   - PostgreSQL (database)
 - **Features**:
-  - Models for customers, services, purchases, and payments.
-  - Dashboard with transaction lists and analytics (e.g., daily totals).
-  - Advanced queries via SQLAlchemy for performance-critical tasks.
-  - Unit and integration tests.
-  - Local deployment with Docker.
+  - Models for customers, services, purchases, and payments, for Django ORM and SQLAlchemy.
+  - Dashboard with transaction lists and example analytics.
+  - Django ORM for simple queries and SQLAlchemy for more demanding ones.
+  - Unit tests.
+
+![](https://i.imgur.com/aoDMg0j.jpeg)
 
 ## Setup Instructions
 ### Prerequisites
@@ -29,7 +31,7 @@ A practice project for a Payments Dashboard for a telecom, built with Django, Dj
 ### Installation
 1. **Clone the Repository**:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/ddrmv/payments_dashboard_mini.git
    cd payments_dashboard_mini
    ```
 
@@ -45,13 +47,13 @@ A practice project for a Payments Dashboard for a telecom, built with Django, Dj
    ```
 
 4. **Configure PostgreSQL**:
-   - Create a database: `createdb payments_dashboard_mini`
+   - Create a database: `createdb payments_dashboard_mini` ( also `test_payments_dashboard_mini`)
    - Update `settings.py` with your database credentials:
      ```python
      DATABASES = {
          'default': {
              'ENGINE': 'django.db.backends.postgresql',
-             'NAME': 'payments_dashboard',
+             'NAME': 'payments_dashboard_mini',
              'USER': '<your-user>',
              'PASSWORD': '<your-password>',
              'HOST': 'localhost',
@@ -66,17 +68,7 @@ A practice project for a Payments Dashboard for a telecom, built with Django, Dj
    python manage.py migrate
    ```
 
-6. **Set Up SQLAlchemy (Optional, for Advanced Queries)**:
-   - Create a `db.py` module for SQLAlchemy configuration:
-     ```python
-     from sqlalchemy import create_engine
-     from sqlalchemy.orm import sessionmaker
-     engine = create_engine('postgresql://<user>:<password>@localhost:5432/payments_dashboard')
-     Session = sessionmaker(bind=engine)
-     ```
-   - Use SQLAlchemy for specific tasks (e.g., complex aggregations) in views or scripts.
-
-7. **Run the Development Server**:
+67. **Run the Development Server**:
    ```bash
    python manage.py runserver
    ```
@@ -87,45 +79,22 @@ A practice project for a Payments Dashboard for a telecom, built with Django, Dj
    pytest --cov --cov-report=html
    ```
 
-9. **Deploy Locally with Docker** (Optional):
-   ```bash
-   docker-compose up --build
-   ```
-
 ## Project Structure
 - `payments_dashboard_mini/`: Django project directory.
 - `payments/`: Django app with models, views, and templates.
 - `templates/`: Templates styled with Bootstrap.
 - `tests/`: pytest unit and integration tests.
 - `scripts/`: Pandas and SQLAlchemy scripts for analytics.
-- `docker-compose.yml`: Docker configuration for local deployment.
 
-## Django Models
-The models are defined using Django ORM in `payments/models.py`. They mirror the provided SQLAlchemy models but are optimized for Django’s ecosystem, with SQLAlchemy integration planned for advanced queries.
+## Django and SQLAlchemy Models
+The models are defined using Django ORM in `payments/models.py`. They mirror the SQLAlchemy models, with SQLAlchemy integration implemented for advanced queries.
 
-## SQLAlchemy Integration
-For advanced queries (e.g., aggregations, filters), define equivalent SQLAlchemy models in a separate module (e.g., `payments/sqlalchemy_models.py`) and use them with the `Session` from `db.py`. Example:
-```python
-from sqlalchemy import Column, Integer, String, Float, Enum
-from sqlalchemy.orm import declarative_base
-Base = declarative_base()
-
-class Payment(Base):
-    __tablename__ = 'payments'
-    payment_id = Column(Integer, primary_key=True)
-    amount = Column(Float)
-    currency = Column(Enum(Currency))
-    # Add other fields as needed
-```
 
 ## Usage
-- **Dashboard**: Access transaction lists and analytics at `/dashboard/`.
-- **Analytics**: Use Pandas in `scripts/analytics.py` to compute daily totals, integrated into views.
+- **Dashboard**: Access transaction lists and analytics at the homepage.
 - **Testing**: Run `pytest` to verify models, views, and analytics logic.
-- **Documentation**: Maintain German/English docs in `docs/`.
 
 ## Notes
-- Use Django ORM for CRUD operations and simple queries to leverage Django’s ecosystem (e.g., admin, forms).
-- Reserve SQLAlchemy for performance-critical tasks (e.g., complex aggregations).
+- Use Django ORM for CRUD operations and simple queries for Django’s ecosystem (e.g., admin, forms).
+- SQLAlchemy for performance-critical tasks.
 - Ensure migrations are applied before running the app.
-- For production, configure a WSGI server (e.g., Gunicorn) and a reverse proxy (e.g., Nginx).
